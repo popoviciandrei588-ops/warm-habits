@@ -4,12 +4,22 @@ import { Habit } from '@/types/habit';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 
+// Helper to format date as YYYY-MM-DD in local timezone
+const formatDateLocal = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 interface HabitCalendarProps {
   habits: Habit[];
   onToggleHabit: (habitId: string, date: string) => void;
+  selectedDate: string;
+  onSelectDate: (date: string) => void;
 }
 
-export function HabitCalendar({ habits, onToggleHabit }: HabitCalendarProps) {
+export function HabitCalendar({ habits, onToggleHabit, selectedDate, onSelectDate }: HabitCalendarProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const { days, monthName, year } = useMemo(() => {
@@ -45,20 +55,32 @@ export function HabitCalendar({ habits, onToggleHabit }: HabitCalendarProps) {
   };
 
   const getCompletionForDate = (date: Date) => {
-    const dateStr = date.toISOString().split('T')[0];
+    const dateStr = formatDateLocal(date);
     const completed = habits.filter((h) => h.completedDates.includes(dateStr)).length;
     return habits.length > 0 ? completed / habits.length : 0;
   };
 
   const isToday = (date: Date) => {
     const today = new Date();
-    return date.toDateString() === today.toDateString();
+    return formatDateLocal(date) === formatDateLocal(today);
+  };
+
+  const isSelected = (date: Date) => {
+    return formatDateLocal(date) === selectedDate;
   };
 
   const isFuture = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    return date > today;
+    const compareDate = new Date(date);
+    compareDate.setHours(0, 0, 0, 0);
+    return compareDate > today;
+  };
+
+  const handleDateClick = (date: Date) => {
+    if (!isFuture(date)) {
+      onSelectDate(formatDateLocal(date));
+    }
   };
 
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -99,14 +121,17 @@ export function HabitCalendar({ habits, onToggleHabit }: HabitCalendarProps) {
           const completion = getCompletionForDate(date);
           const today = isToday(date);
           const future = isFuture(date);
+          const selected = isSelected(date);
 
           return (
             <button
-              key={date.toISOString()}
+              key={formatDateLocal(date)}
               disabled={future}
+              onClick={() => handleDateClick(date)}
               className={cn(
                 "calendar-day aspect-square rounded-xl flex flex-col items-center justify-center relative transition-all duration-200",
                 today && "ring-2 ring-primary ring-offset-2 ring-offset-background",
+                selected && !today && "ring-2 ring-accent ring-offset-2 ring-offset-background",
                 future ? "opacity-40 cursor-not-allowed" : "hover:bg-secondary cursor-pointer",
                 completion === 1 && "bg-success/20",
                 completion > 0 && completion < 1 && "bg-accent/20"
@@ -114,7 +139,7 @@ export function HabitCalendar({ habits, onToggleHabit }: HabitCalendarProps) {
             >
               <span className={cn(
                 "text-sm font-medium",
-                today ? "text-primary" : "text-foreground"
+                today ? "text-primary" : selected ? "text-accent" : "text-foreground"
               )}>
                 {date.getDate()}
               </span>
@@ -123,7 +148,7 @@ export function HabitCalendar({ habits, onToggleHabit }: HabitCalendarProps) {
               {completion > 0 && (
                 <div className="flex gap-0.5 mt-1">
                   {habits.map((habit) => {
-                    const dateStr = date.toISOString().split('T')[0];
+                    const dateStr = formatDateLocal(date);
                     const isCompleted = habit.completedDates.includes(dateStr);
                     return (
                       <div

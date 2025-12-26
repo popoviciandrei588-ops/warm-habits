@@ -1,9 +1,18 @@
+import { useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import { useHabits } from '@/hooks/useHabits';
 import { HabitCard } from '@/components/HabitCard';
 import { HabitCalendar } from '@/components/HabitCalendar';
 import { AddHabitDialog } from '@/components/AddHabitDialog';
 import { StatsOverview } from '@/components/StatsOverview';
+
+// Helper to format date as YYYY-MM-DD in local timezone
+const formatDateLocal = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
 
 const Index = () => {
   const {
@@ -16,7 +25,7 @@ const Index = () => {
     getStreak,
   } = useHabits();
 
-  const today = new Date().toISOString().split('T')[0];
+  const [selectedDate, setSelectedDate] = useState(() => formatDateLocal(new Date()));
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,10 +64,10 @@ const Index = () => {
           <section className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-xl font-semibold text-foreground">
-                Today's Habits
+                {selectedDate === formatDateLocal(new Date()) ? "Today's Habits" : "Habits"}
               </h2>
               <span className="text-sm text-muted-foreground">
-                {new Date().toLocaleDateString('en-US', { 
+                {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', { 
                   weekday: 'long',
                   month: 'short',
                   day: 'numeric'
@@ -82,10 +91,10 @@ const Index = () => {
                   <HabitCard
                     key={habit.id}
                     habit={habit}
-                    isCompleted={isHabitCompleted(habit.id, today)}
+                    isCompleted={isHabitCompleted(habit.id, selectedDate)}
                     streak={getStreak(habit.id)}
                     completionRate={getCompletionRate(habit.id)}
-                    onToggle={() => toggleHabit(habit.id, today)}
+                    onToggle={() => toggleHabit(habit.id, selectedDate)}
                     onDelete={() => deleteHabit(habit.id)}
                   />
                 ))}
@@ -98,6 +107,8 @@ const Index = () => {
             <HabitCalendar 
               habits={habits} 
               onToggleHabit={toggleHabit}
+              selectedDate={selectedDate}
+              onSelectDate={setSelectedDate}
             />
           </section>
         </div>
