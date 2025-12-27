@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, LogOut } from 'lucide-react';
 import { useHabits } from '@/hooks/useHabits';
 import { HabitCard } from '@/components/HabitCard';
 import { HabitCalendar } from '@/components/HabitCalendar';
 import { AddHabitDialog } from '@/components/AddHabitDialog';
 import { StatsOverview } from '@/components/StatsOverview';
-
+import { useAuth } from '@/contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 // Helper to format date as YYYY-MM-DD in local timezone
 const formatDateLocal = (date: Date): string => {
   const year = date.getFullYear();
@@ -15,6 +16,7 @@ const formatDateLocal = (date: Date): string => {
 };
 
 const Index = () => {
+  const { logout } = useAuth();
   const {
     habits,
     addHabit,
@@ -46,7 +48,12 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <AddHabitDialog onAdd={addHabit} />
+            <div className="flex items-center gap-2">
+              <AddHabitDialog onAdd={addHabit} />
+              <Button variant="ghost" size="icon" onClick={logout} title="Sign out">
+                <LogOut className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
         </div>
       </header>
