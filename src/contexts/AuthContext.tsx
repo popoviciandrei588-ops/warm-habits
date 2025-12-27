@@ -7,7 +7,8 @@ import {
   signOut,
   GoogleAuthProvider,
   OAuthProvider,
-  signInWithPopup
+  signInWithRedirect,
+  getRedirectResult
 } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
@@ -40,6 +41,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(user);
       setLoading(false);
     });
+
+    // Handle redirect result
+    getRedirectResult(auth).catch(console.error);
+
     return unsubscribe;
   }, []);
 
@@ -53,14 +58,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
   };
 
   const signInWithApple = async () => {
     const provider = new OAuthProvider('apple.com');
     provider.addScope('email');
     provider.addScope('name');
-    await signInWithPopup(auth, provider);
+    await signInWithRedirect(auth, provider);
   };
 
   const logout = async () => {
