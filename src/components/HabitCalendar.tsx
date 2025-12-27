@@ -139,6 +139,21 @@ export function HabitCalendar({ habits, onToggleHabit, selectedDate, onSelectDat
                 completion > 0 && completion < 1 && !selected && "bg-accent/20"
               )}
             >
+              {/* Day status dot */}
+              {habits.length > 0 && (
+                <div
+                  className={cn(
+                    "absolute top-2 right-2 h-2 w-2 rounded-full",
+                    completion === 1
+                      ? "bg-success"
+                      : completion > 0
+                        ? "bg-accent"
+                        : "bg-muted"
+                  )}
+                  aria-hidden="true"
+                />
+              )}
+
               <span className={cn(
                 "text-sm font-medium",
                 today ? "text-primary" : selected ? "text-accent font-semibold" : "text-foreground"
