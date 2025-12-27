@@ -15,6 +15,7 @@ import { auth } from '@/lib/firebase';
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  authError: { code?: string; message: string } | null;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
@@ -35,33 +36,46 @@ export const useAuth = () => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState<{ code?: string; message: string } | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (nextUser) => {
+      setUser(nextUser);
       setLoading(false);
     });
 
-    // Handle redirect result
-    getRedirectResult(auth).catch(console.error);
+    // Handle redirect result (Google/Apple)
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result?.user) setUser(result.user);
+        setAuthError(null);
+      })
+      .catch((err: any) => {
+        setAuthError({ code: err?.code, message: err?.message || 'Authentication failed' });
+        setLoading(false);
+      });
 
     return unsubscribe;
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    setAuthError(null);
     await signInWithEmailAndPassword(auth, email, password);
   };
 
   const signUp = async (email: string, password: string) => {
+    setAuthError(null);
     await createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInWithGoogle = async () => {
+    setAuthError(null);
     const provider = new GoogleAuthProvider();
     await signInWithRedirect(auth, provider);
   };
 
   const signInWithApple = async () => {
+    setAuthError(null);
     const provider = new OAuthProvider('apple.com');
     provider.addScope('email');
     provider.addScope('name');
@@ -69,18 +83,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
+    setAuthError(null);
     await signOut(auth);
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      loading, 
-      signIn, 
-      signUp, 
-      signInWithGoogle, 
-      signInWithApple, 
-      logout 
+    <AuthContext.Provider value={{
+      user,
+      loading,
+      authError,
+      signIn,
+      signUp,
+      signInWithGoogle,
+      signInWithApple,
+      logout,
     }}>
       {children}
     </AuthContext.Provider>

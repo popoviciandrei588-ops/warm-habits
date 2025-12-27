@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -13,9 +13,18 @@ const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn, signUp, signInWithGoogle, signInWithApple } = useAuth();
+  const { signIn, signUp, signInWithGoogle, signInWithApple, authError } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!authError) return;
+    toast({
+      title: authError.code || "Auth error",
+      description: authError.message,
+      variant: "destructive",
+    });
+  }, [authError, toast]);
 
   const handleEmailAuth = async (isSignUp: boolean) => {
     if (!email || !password) {
