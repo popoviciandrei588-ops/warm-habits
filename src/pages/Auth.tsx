@@ -17,6 +17,21 @@ const Auth = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const hostname = window.location.hostname;
+
+  const copyHostname = async () => {
+    try {
+      await navigator.clipboard.writeText(hostname);
+      toast({ title: "Copied", description: "Domain copied to clipboard" });
+    } catch {
+      toast({
+        title: "Copy failed",
+        description: "Please copy it manually",
+        variant: "destructive",
+      });
+    }
+  };
+
   const handleEmailAuth = async (isSignUp: boolean) => {
     if (!email || !password) {
       toast({
@@ -79,9 +94,13 @@ const Auth = () => {
       await signInWithGoogle();
       navigate('/');
     } catch (error: any) {
+      const message =
+        error?.code === "auth/unauthorized-domain"
+          ? `Unauthorized domain: ${hostname}. Add it in Firebase → Authentication → Settings → Authorized domains.`
+          : error.message || "Failed to sign in with Google";
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in with Google",
+        description: message,
         variant: "destructive"
       });
     } finally {
@@ -95,9 +114,13 @@ const Auth = () => {
       await signInWithApple();
       navigate('/');
     } catch (error: any) {
+      const message =
+        error?.code === "auth/unauthorized-domain"
+          ? `Unauthorized domain: ${hostname}. Add it in Firebase → Authentication → Settings → Authorized domains.`
+          : error.message || "Failed to sign in with Apple";
       toast({
         title: "Error",
-        description: error.message || "Failed to sign in with Apple",
+        description: message,
         variant: "destructive"
       });
     } finally {
@@ -118,6 +141,21 @@ const Auth = () => {
           <CardDescription>Build positive habits, one day at a time</CardDescription>
         </CardHeader>
         <CardContent>
+          <div className="mb-5 rounded-lg border border-border bg-muted/40 p-3 text-sm">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="font-medium text-foreground">Current domain</p>
+                <p className="mt-1 break-all text-muted-foreground">{hostname}</p>
+                <p className="mt-2 text-muted-foreground">
+                  If you see <span className="font-medium">auth/unauthorized-domain</span>, add this domain in Firebase → Authentication → Settings → Authorized domains.
+                </p>
+              </div>
+              <Button type="button" variant="secondary" onClick={copyHostname} className="shrink-0">
+                Copy
+              </Button>
+            </div>
+          </div>
+
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
               <TabsTrigger value="signin">Sign In</TabsTrigger>
