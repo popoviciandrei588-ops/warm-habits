@@ -125,27 +125,29 @@ export function HabitCalendar({ habits, onToggleHabit, selectedDate, onSelectDat
 
           return (
             <button
+              type="button"
               key={formatDateLocal(date)}
               disabled={future}
               onClick={() => handleDateClick(date)}
               className={cn(
-                "calendar-day aspect-square rounded-xl flex flex-col items-center justify-center relative transition-all duration-200",
+                "calendar-day aspect-square rounded-xl flex flex-col items-center justify-center relative transition-all duration-200 border-2",
                 today && "ring-2 ring-primary ring-offset-2 ring-offset-background",
-                selected && !today && "ring-2 ring-accent ring-offset-2 ring-offset-background",
-                future ? "opacity-40 cursor-not-allowed" : "hover:bg-secondary cursor-pointer",
+                selected && "border-accent bg-accent/10",
+                !selected && "border-transparent",
+                future ? "opacity-40 cursor-not-allowed" : "hover:bg-secondary/50 cursor-pointer active:scale-95",
                 completion === 1 && "bg-success/20",
-                completion > 0 && completion < 1 && "bg-accent/20"
+                completion > 0 && completion < 1 && !selected && "bg-accent/20"
               )}
             >
               <span className={cn(
                 "text-sm font-medium",
-                today ? "text-primary" : selected ? "text-accent" : "text-foreground"
+                today ? "text-primary" : selected ? "text-accent font-semibold" : "text-foreground"
               )}>
                 {date.getDate()}
               </span>
               
-              {/* Completion indicator dots */}
-              {completion > 0 && (
+              {/* Completion indicator dots - show for all dates with habits */}
+              {habits.length > 0 && (
                 <div className="flex gap-0.5 mt-1">
                   {habits.map((habit) => {
                     const dateStr = formatDateLocal(date);
@@ -155,7 +157,7 @@ export function HabitCalendar({ habits, onToggleHabit, selectedDate, onSelectDat
                         key={habit.id}
                         className={cn(
                           "w-1.5 h-1.5 rounded-full transition-all duration-300",
-                          isCompleted ? "bg-success" : "bg-muted"
+                          isCompleted ? "bg-success" : "bg-muted/50"
                         )}
                       />
                     );
