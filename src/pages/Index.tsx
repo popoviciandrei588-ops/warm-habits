@@ -31,17 +31,17 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-10 backdrop-blur-lg bg-background/80 border-b border-border/50">
-        <div className="container max-w-5xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-glow">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
+        <div className="container max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-glow shrink-0">
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary-foreground" />
               </div>
-              <div>
-                <h1 className="font-display text-xl font-semibold text-foreground">
+              <div className="min-w-0">
+                <h1 className="font-display text-lg sm:text-xl font-semibold text-foreground truncate">
                   Habit Tracker
                 </h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
                   Build better habits, one day at a time
                 </p>
               </div>
@@ -52,23 +52,33 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container max-w-5xl mx-auto px-4 py-8 space-y-8">
+      <main className="container max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Stats Overview */}
         <section>
           <StatsOverview habits={habits} getStreak={getStreak} />
         </section>
 
-        {/* Two Column Layout */}
-        <div className="grid lg:grid-cols-5 gap-8">
+        {/* Two Column Layout - Calendar first on mobile */}
+        <div className="grid lg:grid-cols-5 gap-4 sm:gap-8">
+          {/* Calendar - Shows first on mobile */}
+          <section className="lg:col-span-3 order-first lg:order-last">
+            <HabitCalendar 
+              habits={habits} 
+              onToggleHabit={toggleHabit}
+              selectedDate={selectedDate}
+              onSelectDate={setSelectedDate}
+            />
+          </section>
+
           {/* Habits List */}
-          <section className="lg:col-span-2 space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-semibold text-foreground">
+          <section className="lg:col-span-2 space-y-3 sm:space-y-4">
+            <div className="flex items-center justify-between gap-2">
+              <h2 className="font-display text-lg sm:text-xl font-semibold text-foreground">
                 {selectedDate === formatDateLocal(new Date()) ? "Today's Habits" : "Habits"}
               </h2>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs sm:text-sm text-muted-foreground shrink-0">
                 {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', { 
-                  weekday: 'long',
+                  weekday: 'short',
                   month: 'short',
                   day: 'numeric'
                 })}
@@ -76,9 +86,9 @@ const Index = () => {
             </div>
 
             {habits.length === 0 ? (
-              <div className="bg-card rounded-xl p-8 text-center border border-border/50">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-secondary flex items-center justify-center">
-                  <Sparkles className="w-8 h-8 text-muted-foreground" />
+              <div className="bg-card rounded-xl p-6 sm:p-8 text-center border border-border/50">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 rounded-full bg-secondary flex items-center justify-center">
+                  <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground" />
                 </div>
                 <h3 className="font-medium text-foreground mb-2">No habits yet</h3>
                 <p className="text-sm text-muted-foreground mb-4">
@@ -86,7 +96,7 @@ const Index = () => {
                 </p>
               </div>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3">
                 {habits.map((habit) => (
                   <HabitCard
                     key={habit.id}
@@ -100,16 +110,6 @@ const Index = () => {
                 ))}
               </div>
             )}
-          </section>
-
-          {/* Calendar */}
-          <section className="lg:col-span-3">
-            <HabitCalendar 
-              habits={habits} 
-              onToggleHabit={toggleHabit}
-              selectedDate={selectedDate}
-              onSelectDate={setSelectedDate}
-            />
           </section>
         </div>
       </main>

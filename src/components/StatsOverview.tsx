@@ -52,21 +52,21 @@ export function StatsOverview({ habits, getStreak }: StatsOverviewProps) {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="bg-card rounded-xl p-4 shadow-soft border border-border/50 fade-in"
+          className="bg-card rounded-lg sm:rounded-xl p-3 sm:p-4 shadow-soft border border-border/50 fade-in"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <div className={`w-10 h-10 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
-              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 sm:mb-2">
+            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg ${stat.bgColor} flex items-center justify-center`}>
+              <stat.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${stat.color}`} />
             </div>
           </div>
-          <p className="text-2xl font-display font-semibold text-foreground">
+          <p className="text-lg sm:text-2xl font-display font-semibold text-foreground">
             {stat.value}
           </p>
-          <p className="text-sm text-muted-foreground">{stat.label}</p>
+          <p className="text-xs sm:text-sm text-muted-foreground truncate">{stat.label}</p>
         </div>
       ))}
     </div>
