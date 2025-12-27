@@ -86,11 +86,15 @@ const Auth = () => {
     setLoading(true);
     try {
       await signInWithGoogle();
-      navigate('/');
+      // Redirect flow will navigate away; if it returns without redirect, just stay.
     } catch (error: any) {
+      const isUnauthorized = error?.code === "auth/unauthorized-domain";
+      const origin = window.location.origin;
       toast({
-        title: "Error",
-        description: error.message || "Failed to sign in with Google",
+        title: isUnauthorized ? "Unauthorized domain" : "Error",
+        description: isUnauthorized
+          ? `Firebase blocked this domain. Add this EXACT domain in Firebase → Authentication → Settings → Authorized domains: ${origin}`
+          : error.message || "Failed to sign in with Google",
         variant: "destructive"
       });
     } finally {
@@ -102,11 +106,15 @@ const Auth = () => {
     setLoading(true);
     try {
       await signInWithApple();
-      navigate('/');
+      // Redirect flow will navigate away; if it returns without redirect, just stay.
     } catch (error: any) {
+      const isUnauthorized = error?.code === "auth/unauthorized-domain";
+      const origin = window.location.origin;
       toast({
-        title: "Error",
-        description: error.message || "Failed to sign in with Apple",
+        title: isUnauthorized ? "Unauthorized domain" : "Error",
+        description: isUnauthorized
+          ? `Firebase blocked this domain. Add this EXACT domain in Firebase → Authentication → Settings → Authorized domains: ${origin}`
+          : error.message || "Failed to sign in with Apple",
         variant: "destructive"
       });
     } finally {
