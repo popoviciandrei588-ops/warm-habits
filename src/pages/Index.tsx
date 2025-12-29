@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Sparkles, Settings } from 'lucide-react';
+import { Sparkles, LogOut } from 'lucide-react';
 import { useHabits } from '@/hooks/useHabits';
 import { HabitCard } from '@/components/HabitCard';
 import { HabitCalendar } from '@/components/HabitCalendar';
@@ -19,7 +18,6 @@ const formatDateLocal = (date: Date): string => {
 };
 
 const Index = () => {
-  const navigate = useNavigate();
   const { logout } = useAuth();
   const {
     showOnboarding,
@@ -79,8 +77,8 @@ const Index = () => {
               <div data-tour="add-habit">
                 <AddHabitDialog onAdd={addHabit} />
               </div>
-              <Button variant="ghost" size="icon" onClick={() => navigate('/settings')} title="Settings">
-                <Settings className="w-4 h-4" />
+              <Button variant="ghost" size="icon" onClick={logout} title="Sign out">
+                <LogOut className="w-4 h-4" />
               </Button>
             </div>
           </div>
