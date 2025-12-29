@@ -7,6 +7,8 @@ import { AddHabitDialog } from '@/components/AddHabitDialog';
 import { StatsOverview } from '@/components/StatsOverview';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
+import { OnboardingTour } from '@/components/OnboardingTour';
+import { useOnboarding } from '@/hooks/useOnboarding';
 // Helper to format date as YYYY-MM-DD in local timezone
 const formatDateLocal = (date: Date): string => {
   const year = date.getFullYear();
@@ -17,6 +19,16 @@ const formatDateLocal = (date: Date): string => {
 
 const Index = () => {
   const { logout } = useAuth();
+  const {
+    showOnboarding,
+    currentStep,
+    currentStepData,
+    totalSteps,
+    nextStep,
+    prevStep,
+    skipOnboarding,
+    isReady,
+  } = useOnboarding();
   const {
     habits,
     addHabit,
@@ -31,8 +43,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Onboarding Tour */}
+      {showOnboarding && currentStepData && (
+        <OnboardingTour
+          step={currentStepData}
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+          onNext={nextStep}
+          onPrev={prevStep}
+          onSkip={skipOnboarding}
+          isReady={isReady}
+        />
+      )}
+
       {/* Header */}
-      <header className="sticky top-0 z-10 backdrop-blur-lg bg-background/80 border-b border-border/50">
+      <header data-tour="header" className="sticky top-0 z-10 backdrop-blur-lg bg-background/80 border-b border-border/50">
         <div className="container max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -49,7 +74,9 @@ const Index = () => {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <AddHabitDialog onAdd={addHabit} />
+              <div data-tour="add-habit">
+                <AddHabitDialog onAdd={addHabit} />
+              </div>
               <Button variant="ghost" size="icon" onClick={logout} title="Sign out">
                 <LogOut className="w-4 h-4" />
               </Button>
@@ -61,14 +88,14 @@ const Index = () => {
       {/* Main Content */}
       <main className="container max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Stats Overview */}
-        <section>
+        <section data-tour="stats">
           <StatsOverview habits={habits} getStreak={getStreak} />
         </section>
 
         {/* Two Column Layout - Calendar first on mobile */}
         <div className="grid lg:grid-cols-5 gap-4 sm:gap-8">
           {/* Calendar - Shows first on mobile */}
-          <section className="lg:col-span-3 order-first lg:order-last">
+          <section data-tour="calendar" className="lg:col-span-3 order-first lg:order-last">
             <HabitCalendar 
               habits={habits} 
               onToggleHabit={toggleHabit}
@@ -78,7 +105,7 @@ const Index = () => {
           </section>
 
           {/* Habits List */}
-          <section className="lg:col-span-2 space-y-3 sm:space-y-4">
+          <section data-tour="habits-list" className="lg:col-span-2 space-y-3 sm:space-y-4">
             <div className="flex items-center justify-between gap-2">
               <h2 className="font-display text-lg sm:text-xl font-semibold text-foreground">
                 {selectedDate === formatDateLocal(new Date()) ? "Today's Habits" : "Habits"}
