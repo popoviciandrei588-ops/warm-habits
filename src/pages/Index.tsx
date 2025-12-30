@@ -10,6 +10,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { OnboardingTour } from '@/components/OnboardingTour';
 import { useOnboarding } from '@/hooks/useOnboarding';
+import { OnboardingQuestionnaire } from '@/components/OnboardingQuestionnaire';
+import { useOnboardingQuestions } from '@/hooks/useOnboardingQuestions';
 // Helper to format date as YYYY-MM-DD in local timezone
 const formatDateLocal = (date: Date): string => {
   const year = date.getFullYear();
@@ -31,6 +33,7 @@ const Index = () => {
     skipOnboarding,
     isReady,
   } = useOnboarding();
+  const { showQuestionnaire, completeQuestionnaire } = useOnboardingQuestions();
   const {
     habits,
     addHabit,
@@ -42,6 +45,11 @@ const Index = () => {
   } = useHabits();
 
   const [selectedDate, setSelectedDate] = useState(() => formatDateLocal(new Date()));
+
+  // Show questionnaire first, then tour
+  if (showQuestionnaire) {
+    return <OnboardingQuestionnaire onComplete={completeQuestionnaire} />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
