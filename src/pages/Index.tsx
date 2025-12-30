@@ -6,12 +6,14 @@ import { HabitCard } from '@/components/HabitCard';
 import { HabitCalendar } from '@/components/HabitCalendar';
 import { AddHabitDialog } from '@/components/AddHabitDialog';
 import { StatsOverview } from '@/components/StatsOverview';
+import { AchievementsSection } from '@/components/AchievementsSection';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { OnboardingTour } from '@/components/OnboardingTour';
 import { useOnboarding } from '@/hooks/useOnboarding';
 import { OnboardingQuestionnaire } from '@/components/OnboardingQuestionnaire';
 import { useOnboardingQuestions } from '@/hooks/useOnboardingQuestions';
+import { useAchievements } from '@/hooks/useAchievements';
 // Helper to format date as YYYY-MM-DD in local timezone
 const formatDateLocal = (date: Date): string => {
   const year = date.getFullYear();
@@ -45,6 +47,7 @@ const Index = () => {
   } = useHabits();
 
   const [selectedDate, setSelectedDate] = useState(() => formatDateLocal(new Date()));
+  const achievements = useAchievements({ habits, getStreak });
 
   // Show questionnaire first, then tour
   if (showQuestionnaire) {
@@ -156,6 +159,11 @@ const Index = () => {
             )}
           </section>
         </div>
+
+        {/* Achievements Section */}
+        <section>
+          <AchievementsSection achievements={achievements} />
+        </section>
       </main>
 
       {/* Footer */}
