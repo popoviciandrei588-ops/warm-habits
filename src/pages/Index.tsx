@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sparkles, Settings } from 'lucide-react';
+import { Sparkles, Settings, User } from 'lucide-react';
 import { useHabits } from '@/hooks/useHabits';
 import { HabitCard } from '@/components/HabitCard';
 import { HabitCalendar } from '@/components/HabitCalendar';
@@ -86,10 +86,13 @@ const Index = () => {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <div data-tour="add-habit">
                 <AddHabitDialog onAdd={addHabit} />
               </div>
+              <Button variant="ghost" size="icon" onClick={() => navigate('/profile')} title="Profile">
+                <User className="w-4 h-4" />
+              </Button>
               <Button variant="ghost" size="icon" onClick={() => navigate('/settings')} title="Settings">
                 <Settings className="w-4 h-4" />
               </Button>
