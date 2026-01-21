@@ -1,7 +1,6 @@
 import SwiftUI
 import SwiftData
 import FamilyControls
-import UIKit
 
 struct OnboardingFlowView: View {
     @Environment(\.modelContext) private var modelContext
@@ -169,27 +168,6 @@ private struct OnboardingPermissionStep<Next: View>: View {
             await appBlockingManager.refreshAuthorizationStatus()
             showFix = appBlockingManager.authorizationStatus != .approved
         }
-    }
-}
-
-private struct PermissionsFixCard: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Permission needed")
-                .font(.headline)
-            Text("If you denied permission, enable it in Settings so PrayerLock can block apps.")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
-            Button("Open Settings") {
-                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-                UIApplication.shared.open(url)
-            }
-            .font(.subheadline.weight(.semibold))
-            .padding(.top, 2)
-        }
-        .padding(14)
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 

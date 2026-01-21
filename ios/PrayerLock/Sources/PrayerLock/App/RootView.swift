@@ -13,6 +13,9 @@ struct RootView: View {
     @Query(sort: \BlockSelection.createdAt, order: .forward)
     private var selections: [BlockSelection]
 
+    @Query(sort: \Streak.current, order: .reverse)
+    private var streaks: [Streak]
+
     var body: some View {
         Group {
             if !subscriptionManager.isSubscribed {
@@ -35,6 +38,9 @@ struct RootView: View {
         }
         if selections.isEmpty {
             modelContext.insert(BlockSelection())
+        }
+        if streaks.isEmpty {
+            modelContext.insert(Streak())
         }
 
         // Keep the selected apps shielded after onboarding by default.

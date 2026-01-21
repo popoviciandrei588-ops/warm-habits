@@ -190,6 +190,9 @@ struct PrayerTimerView: View {
             }
         }
 
+        // Update streak + analytics aggregates.
+        StreakService.registerCompletedPrayer(on: .now, modelContext: modelContext)
+
         // Unlock (unshield) only when the timer completes.
         appBlockingManager.clearShield()
         appState.completePrayer()
@@ -217,6 +220,16 @@ private struct PrayerCompleteView: View {
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
+
+            NavigationLink {
+                VerseView()
+            } label: {
+                Text("Read today’s verse")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .padding(.horizontal, 20)
 
             Button {
                 // “Repeatable”: user can lock as many times as they want.
