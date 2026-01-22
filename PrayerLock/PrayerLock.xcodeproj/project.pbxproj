@@ -1,0 +1,433 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A1000001233F0001 /* PrayerLockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000001233F0000 /* PrayerLockApp.swift */; };
+		A1000002233F0001 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002233F0000 /* ContentView.swift */; };
+		A1000003233F0001 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000003233F0000 /* HomeView.swift */; };
+		A1000004233F0001 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000004233F0000 /* OnboardingView.swift */; };
+		A1000005233F0001 /* PrayerSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000005233F0000 /* PrayerSessionView.swift */; };
+		A1000006233F0001 /* DailyVerseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000006233F0000 /* DailyVerseView.swift */; };
+		A1000007233F0001 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000007233F0000 /* StatsView.swift */; };
+		A1000008233F0001 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000008233F0000 /* SettingsView.swift */; };
+		A1000009233F0001 /* Prayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000009233F0000 /* Prayer.swift */; };
+		A100000A233F0001 /* BibleVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000A233F0000 /* BibleVerse.swift */; };
+		A100000B233F0001 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000B233F0000 /* UserSettings.swift */; };
+		A100000C233F0001 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000C233F0000 /* AppState.swift */; };
+		A100000D233F0001 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000D233F0000 /* ScreenTimeManager.swift */; };
+		A100000E233F0001 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E233F0000 /* StorageManager.swift */; };
+		A100000F233F0001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000F233F0000 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A1000001233F0000 /* PrayerLockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLockApp.swift; sourceTree = "<group>"; };
+		A1000002233F0000 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A1000003233F0000 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A1000004233F0000 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		A1000005233F0000 /* PrayerSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerSessionView.swift; sourceTree = "<group>"; };
+		A1000006233F0000 /* DailyVerseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyVerseView.swift; sourceTree = "<group>"; };
+		A1000007233F0000 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		A1000008233F0000 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000009233F0000 /* Prayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prayer.swift; sourceTree = "<group>"; };
+		A100000A233F0000 /* BibleVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerse.swift; sourceTree = "<group>"; };
+		A100000B233F0000 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
+		A100000C233F0000 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		A100000D233F0000 /* ScreenTimeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTimeManager.swift; sourceTree = "<group>"; };
+		A100000E233F0000 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		A100000F233F0000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A1000010233F0000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1000011233F0000 /* PrayerLock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerLock.entitlements; sourceTree = "<group>"; };
+		A1000099233F0000 /* PrayerLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A1000096233F0000 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A1000020233F0000 = {
+			isa = PBXGroup;
+			children = (
+				A1000021233F0000 /* PrayerLock */,
+				A1000098233F0000 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A1000021233F0000 /* PrayerLock */ = {
+			isa = PBXGroup;
+			children = (
+				A1000001233F0000 /* PrayerLockApp.swift */,
+				A1000022233F0000 /* Views */,
+				A1000023233F0000 /* Models */,
+				A1000024233F0000 /* ViewModels */,
+				A1000025233F0000 /* Services */,
+				A1000026233F0000 /* Resources */,
+				A1000010233F0000 /* Info.plist */,
+				A1000011233F0000 /* PrayerLock.entitlements */,
+			);
+			path = PrayerLock;
+			sourceTree = "<group>";
+		};
+		A1000022233F0000 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A1000002233F0000 /* ContentView.swift */,
+				A1000003233F0000 /* HomeView.swift */,
+				A1000004233F0000 /* OnboardingView.swift */,
+				A1000005233F0000 /* PrayerSessionView.swift */,
+				A1000006233F0000 /* DailyVerseView.swift */,
+				A1000007233F0000 /* StatsView.swift */,
+				A1000008233F0000 /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A1000023233F0000 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A1000009233F0000 /* Prayer.swift */,
+				A100000A233F0000 /* BibleVerse.swift */,
+				A100000B233F0000 /* UserSettings.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A1000024233F0000 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				A100000C233F0000 /* AppState.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		A1000025233F0000 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A100000D233F0000 /* ScreenTimeManager.swift */,
+				A100000E233F0000 /* StorageManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A1000026233F0000 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A100000F233F0000 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A1000098233F0000 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A1000099233F0000 /* PrayerLock.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A1000095233F0000 /* PrayerLock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A100009C233F0000 /* Build configuration list for PBXNativeTarget "PrayerLock" */;
+			buildPhases = (
+				A1000094233F0000 /* Sources */,
+				A1000096233F0000 /* Frameworks */,
+				A1000097233F0000 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PrayerLock;
+			productName = PrayerLock;
+			productReference = A1000099233F0000 /* PrayerLock.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A1000090233F0000 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					A1000095233F0000 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = A1000093233F0000 /* Build configuration list for PBXProject "PrayerLock" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A1000020233F0000;
+			productRefGroup = A1000098233F0000 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A1000095233F0000 /* PrayerLock */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A1000097233F0000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000F233F0001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A1000094233F0000 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1000001233F0001 /* PrayerLockApp.swift in Sources */,
+				A1000002233F0001 /* ContentView.swift in Sources */,
+				A1000003233F0001 /* HomeView.swift in Sources */,
+				A1000004233F0001 /* OnboardingView.swift in Sources */,
+				A1000005233F0001 /* PrayerSessionView.swift in Sources */,
+				A1000006233F0001 /* DailyVerseView.swift in Sources */,
+				A1000007233F0001 /* StatsView.swift in Sources */,
+				A1000008233F0001 /* SettingsView.swift in Sources */,
+				A1000009233F0001 /* Prayer.swift in Sources */,
+				A100000A233F0001 /* BibleVerse.swift in Sources */,
+				A100000B233F0001 /* UserSettings.swift in Sources */,
+				A100000C233F0001 /* AppState.swift in Sources */,
+				A100000D233F0001 /* ScreenTimeManager.swift in Sources */,
+				A100000E233F0001 /* StorageManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A100009A233F0000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A100009B233F0000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A100009D233F0000 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PrayerLock/PrayerLock.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PrayerLock/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Lock";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prayerlock.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A100009E233F0000 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PrayerLock/PrayerLock.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PrayerLock/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Prayer Lock";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.prayerlock.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A1000093233F0000 /* Build configuration list for PBXProject "PrayerLock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A100009A233F0000 /* Debug */,
+				A100009B233F0000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A100009C233F0000 /* Build configuration list for PBXNativeTarget "PrayerLock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A100009D233F0000 /* Debug */,
+				A100009E233F0000 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A1000090233F0000 /* Project object */;
+}
