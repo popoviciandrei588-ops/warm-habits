@@ -1,6 +1,6 @@
 # Prayer Lock - Christian Focus App
 
-A SwiftUI iOS app that helps users pause and pray before opening distracting apps. Inspired by "Prayer Lock: Christian Focus".
+A beautiful, gamified iOS SwiftUI app that helps users pause and pray before opening distracting apps. Inspired by "Prayer Lock: Christian Focus" and prayerlock.com.
 
 ![iOS 17+](https://img.shields.io/badge/iOS-17%2B-blue)
 ![Swift 5](https://img.shields.io/badge/Swift-5-orange)
@@ -10,26 +10,48 @@ A SwiftUI iOS app that helps users pause and pray before opening distracting app
 
 ### Core Functionality
 - **App Blocking**: Block selected apps using Apple's Screen Time APIs (FamilyControls + ManagedSettings)
-- **Prayer Timer**: 60-second countdown prayer session (customizable from 30s to 5 minutes)
+- **Prayer Timer**: Customizable prayer duration (30s - 5 minutes)
+- **Multiple Timer Styles**: Circular, Digital, Minimal, and Nature themes
 - **Prayer Moods**: Choose from Gratitude, Peace, Strength, Hope, or Forgiveness
 - **Bible-style Prayers**: Curated prayers with matching Bible verses for each mood
 
+### Gamification System
+- **XP & Leveling**: Earn XP for each prayer, build your spiritual level
+- **Level Titles**: Progress through titles like Seeker, Devoted, Faithful, Disciple, Apostle, Prophet, Saint
+- **Achievements**: 18+ achievements to unlock across categories:
+  - Streak achievements (3 days to 365 days)
+  - Prayer count achievements (1 to 1000 prayers)
+  - Time achievements (30 minutes to 10 hours)
+  - Special achievements (Early Bird, Night Owl, Weekend Warrior)
+- **Daily Challenges**: Fresh challenges every day with XP rewards
+- **Prayer Streak**: Track consecutive days of prayer with animated flame
+- **Confetti Celebrations**: Visual celebrations on prayer completion
+- **Level Up Animations**: Special modal when reaching new levels
+
+### Customization
+- **6 Beautiful Themes**: Ocean, Sunset, Forest, Lavender, Midnight, Rose
+- **4 Timer Styles**: Choose your preferred countdown visualization
+- **Sound Options**: Gentle Chime, Meditation Bell, Nature Sounds, Soft Rain
+- **Haptic Feedback**: Toggle vibration feedback
+- **Celebration Effects**: Toggle confetti animations
+
 ### Additional Features
-- **Prayer Streak**: Track consecutive days of prayer
-- **Daily Bible Verse**: New verse every day with sharing capability
-- **Statistics**: Total prayers, longest streak, time spent in prayer
-- **Achievements**: Unlock badges for milestones
-- **Beautiful UI**: Calming, minimal design with smooth animations
+- **Daily Bible Verse**: New verse every day with share & copy
+- **Statistics Dashboard**: Track your prayer journey with visual graphs
+- **Mood History**: See which prayer moods you use most
+- **Weekly Calendar**: Visual representation of your prayer activity
+- **Beautiful Animations**: Smooth, calming animations throughout
 
 ## Screenshots
 
-The app includes:
-1. **Onboarding Flow** - Explains the concept and requests permissions
-2. **Home Screen** - Quick stats, mood selector, and pray button
-3. **Prayer Session** - Calming timer with prayer text
-4. **Daily Verse** - Scripture for daily reflection
-5. **Stats & Achievements** - Track your prayer journey
-6. **Settings** - Customize prayer duration and manage blocked apps
+The app includes these beautifully designed screens:
+
+1. **Animated Onboarding** - 5-page intro with floating shapes and progress indicators
+2. **Home Dashboard** - Level badge, XP progress, streak flame, daily challenges
+3. **Prayer Session** - Multiple timer styles with breathing guide
+4. **Daily Verse** - Scripture with glow effects and sharing options
+5. **Journey Stats** - Achievements, challenges, prayer history
+6. **Settings** - Theme picker, timer customization, sound options
 
 ## Requirements
 
@@ -41,42 +63,39 @@ The app includes:
 
 ### 1. Open in Xcode
 
-1. Navigate to the `PrayerLock` folder
-2. Open `PrayerLock.xcodeproj` in Xcode
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd PrayerLock
+
+# Open in Xcode
+open PrayerLock.xcodeproj
+```
 
 ### 2. Configure Signing & Capabilities
 
 1. Select the project in the Navigator
 2. Select the "PrayerLock" target
 3. Go to "Signing & Capabilities"
-4. Set your Development Team
-5. Ensure "Family Controls" capability is added
+4. Set your **Development Team**
+5. Change **Bundle Identifier** to something unique (e.g., `com.yourname.prayerlock`)
+6. Ensure "Family Controls" capability is added
 
-### 3. Add the Shield Configuration Extension (Optional but Recommended)
+### 3. Preview in Xcode
 
-For custom shield UI when blocked apps are opened:
+You can preview individual views using SwiftUI Previews:
 
-1. In Xcode, go to File > New > Target
-2. Choose "Shield Configuration Extension"
-3. Name it "PrayerLockShield"
-4. Copy the content from `PrayerLockShield/ShieldConfigurationExtension.swift`
-5. Add the Family Controls capability to the extension
+1. Open any view file (e.g., `Views/HomeView.swift`)
+2. Press `Cmd + Option + P` or click "Resume" in the canvas
+3. The preview will show the UI with sample data
 
-### 4. Request Family Controls Entitlement
+### 4. Run on Device
 
-**Important**: The FamilyControls framework requires a special entitlement from Apple.
+**Important**: Screen Time APIs require a physical device.
 
-1. Go to [Apple Developer Portal](https://developer.apple.com/account)
-2. Navigate to Certificates, Identifiers & Profiles
-3. Select your App ID
-4. Enable "Family Controls" capability
-5. You may need to request access if it's not available
-
-### 5. Build and Run
-
-1. Connect your iOS device (Screen Time APIs don't work in Simulator)
-2. Select your device as the build target
-3. Build and run (⌘R)
+1. Connect your iPhone (iOS 17+) to your Mac
+2. Select your device in the toolbar
+3. Press `Cmd + R` to build and run
 
 ## Project Structure
 
@@ -84,92 +103,132 @@ For custom shield UI when blocked apps are opened:
 PrayerLock/
 ├── PrayerLock.xcodeproj
 ├── PrayerLock/
-│   ├── PrayerLockApp.swift          # App entry point
-│   ├── Info.plist                    # App configuration
-│   ├── PrayerLock.entitlements       # Family Controls entitlement
+│   ├── PrayerLockApp.swift           # App entry point
+│   ├── Info.plist                     # App configuration
+│   ├── PrayerLock.entitlements        # Family Controls entitlement
 │   │
 │   ├── Views/
-│   │   ├── ContentView.swift         # Main content router
-│   │   ├── OnboardingView.swift      # First-launch setup
-│   │   ├── HomeView.swift            # Main dashboard
-│   │   ├── PrayerSessionView.swift   # Prayer timer screen
-│   │   ├── DailyVerseView.swift      # Bible verse display
-│   │   ├── StatsView.swift           # Statistics & achievements
-│   │   └── SettingsView.swift        # App settings
+│   │   ├── ContentView.swift          # Main content router
+│   │   ├── OnboardingView.swift       # Animated 5-page setup
+│   │   ├── HomeView.swift             # Dashboard with gamification
+│   │   ├── PrayerSessionView.swift    # Multi-style timer
+│   │   ├── DailyVerseView.swift       # Bible verse with effects
+│   │   ├── StatsView.swift            # Statistics & achievements
+│   │   ├── SettingsView.swift         # Full customization
+│   │   └── Components/
+│   │       └── UIComponents.swift     # Reusable UI components
 │   │
 │   ├── Models/
-│   │   ├── Prayer.swift              # Prayer & mood models
-│   │   ├── BibleVerse.swift          # Verse collection
-│   │   └── UserSettings.swift        # Settings & streak models
+│   │   ├── Prayer.swift               # Prayer & mood models
+│   │   ├── BibleVerse.swift           # 31 daily verses
+│   │   ├── UserSettings.swift         # Settings & streak
+│   │   └── Gamification.swift         # Levels, XP, achievements
 │   │
 │   ├── ViewModels/
-│   │   └── AppState.swift            # Global app state
+│   │   └── AppState.swift             # Global app state + gamification
 │   │
 │   ├── Services/
-│   │   ├── ScreenTimeManager.swift   # Screen Time API wrapper
-│   │   └── StorageManager.swift      # Local storage
+│   │   ├── ScreenTimeManager.swift    # Screen Time API wrapper
+│   │   └── StorageManager.swift       # Local storage
 │   │
 │   └── Resources/
-│       └── Assets.xcassets/          # Colors and app icon
+│       └── Assets.xcassets/           # Colors and app icon
 │
-└── PrayerLockShield/                  # Shield extension (optional)
+└── PrayerLockShield/                   # Shield extension
     ├── ShieldConfigurationExtension.swift
     ├── Info.plist
     └── PrayerLockShield.entitlements
 ```
 
-## How It Works
+## Gamification Details
 
-### Screen Time Integration
+### XP System
+- **25 XP** per completed prayer
+- **10 XP** per streak day bonus
+- **50 XP** bonus for first prayer
+- Achievement unlocks award **50-5000 XP**
 
-The app uses three Apple frameworks:
-- **FamilyControls**: Request authorization and select apps to block
-- **ManagedSettings**: Apply shields to selected applications
-- **DeviceActivity** (optional): Monitor device activity
+### Level Progression
+| Level | Title | XP Required |
+|-------|-------|-------------|
+| 1 | Beginner | 0 |
+| 2 | Seeker | 100 |
+| 3 | Devoted | 250 |
+| 4 | Faithful | 450 |
+| 5 | Disciple | 700 |
+| 6 | Apostle | 1000 |
+| 7 | Prophet | 1350 |
+| 8 | Saint | 1750 |
+| 9 | Enlightened | 2200 |
+| 10+ | Blessed | 2700+ |
 
-### Flow
-
-1. User grants Screen Time permission
-2. User selects apps to block
-3. When a blocked app is opened, iOS shows a shield
-4. User opens Prayer Lock and completes a prayer
-5. Apps are temporarily unblocked for 1 hour
+### Daily Challenges
+Three new challenges every day:
+1. **Prayer Count**: Complete X prayers today
+2. **Duration**: Spend X minutes in prayer
+3. **Mood Focus**: Pray with a specific mood
 
 ## Customization
 
-### Adding More Prayers
+### Adding Themes
+Edit `Models/Gamification.swift` to add new themes:
 
-Edit `Models/Prayer.swift` and add entries to the `PrayerCollection.prayers` dictionary.
+```swift
+case newTheme = "New Theme"
 
-### Adding More Bible Verses
+var primaryColor: Color {
+    case .newTheme: return Color(red: 0.5, green: 0.5, blue: 0.5)
+}
+```
 
-Edit `Models/BibleVerse.swift` and add entries to the `DailyVerseCollection.verses` array.
+### Adding Achievements
+Edit `Models/Gamification.swift` to add new achievements:
 
-### Changing Colors
+```swift
+Achievement(
+    id: "unique_id",
+    title: "Achievement Title",
+    description: "How to unlock",
+    icon: "sf.symbol.name",
+    category: .special,
+    requirement: 1,
+    xpReward: 100,
+    isUnlocked: false
+)
+```
 
-Edit the color sets in `Resources/Assets.xcassets/` or modify the colors directly in the views.
+### Adding Prayers
+Edit `Models/Prayer.swift` to add new prayers for each mood.
 
 ## Troubleshooting
 
 ### "Family Controls not available"
-- Ensure you're running on a physical device, not the simulator
-- Check that your Apple Developer account has the Family Controls entitlement
+- Run on a physical device, not the simulator
+- Ensure your Apple Developer account has the Family Controls entitlement
 
 ### "Authorization denied"
-- The user must be signed into iCloud
+- User must be signed into iCloud
 - Screen Time must be enabled in device settings
-- For children's devices, parents must approve via Family Sharing
 
-### Build errors about missing frameworks
-- Ensure deployment target is iOS 17.0+
-- Clean build folder (⇧⌘K) and rebuild
+### SwiftUI Previews not loading
+- Clean build folder: `Cmd + Shift + K`
+- Resume preview: `Cmd + Option + P`
 
 ## Privacy
 
 This app:
 - Stores all data locally on the device
 - Does not collect or transmit any personal information
-- Uses Screen Time APIs for app blocking only
+- Uses Screen Time APIs only for app blocking
+- No analytics or tracking
+
+## Tech Stack
+
+- **SwiftUI** - Modern declarative UI
+- **FamilyControls** - App selection
+- **ManagedSettings** - App blocking/shielding
+- **UserDefaults** - Local data persistence
+- **Combine** - Reactive state management
 
 ## License
 
@@ -178,5 +237,6 @@ This project is for educational purposes. Feel free to use and modify.
 ## Acknowledgments
 
 - Inspired by "Prayer Lock: Christian Focus" app
+- UI/UX inspired by prayerlock.com
 - Bible verses from various translations
 - Built with SwiftUI and Apple's Screen Time APIs

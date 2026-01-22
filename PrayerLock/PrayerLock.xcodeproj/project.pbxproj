@@ -22,6 +22,8 @@
 		A100000D233F0001 /* ScreenTimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000D233F0000 /* ScreenTimeManager.swift */; };
 		A100000E233F0001 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000E233F0000 /* StorageManager.swift */; };
 		A100000F233F0001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A100000F233F0000 /* Assets.xcassets */; };
+		A1000020233F0001 /* Gamification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000020233F0000 /* Gamification.swift */; };
+		A1000021233F0001 /* UIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000021233F0000 /* UIComponents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		A100000F233F0000 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A1000010233F0000 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1000011233F0000 /* PrayerLock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PrayerLock.entitlements; sourceTree = "<group>"; };
+		A1000020233F0000 /* Gamification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gamification.swift; sourceTree = "<group>"; };
+		A1000021233F0000 /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComponents.swift; sourceTree = "<group>"; };
 		A1000099233F0000 /* PrayerLock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerLock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -56,15 +60,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A1000019233F0000 = {
+			isa = PBXGroup;
+			children = (
+				A1000021233F0000 /* UIComponents.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		A1000020233F0000 = {
 			isa = PBXGroup;
 			children = (
-				A1000021233F0000 /* PrayerLock */,
+				A1000021233F0001 /* PrayerLock */,
 				A1000098233F0000 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A1000021233F0000 /* PrayerLock */ = {
+		A1000021233F0001 /* PrayerLock */ = {
 			isa = PBXGroup;
 			children = (
 				A1000001233F0000 /* PrayerLockApp.swift */,
@@ -89,6 +101,7 @@
 				A1000006233F0000 /* DailyVerseView.swift */,
 				A1000007233F0000 /* StatsView.swift */,
 				A1000008233F0000 /* SettingsView.swift */,
+				A1000019233F0000 /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -99,6 +112,7 @@
 				A1000009233F0000 /* Prayer.swift */,
 				A100000A233F0000 /* BibleVerse.swift */,
 				A100000B233F0000 /* UserSettings.swift */,
+				A1000020233F0000 /* Gamification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -219,6 +233,8 @@
 				A100000C233F0001 /* AppState.swift in Sources */,
 				A100000D233F0001 /* ScreenTimeManager.swift in Sources */,
 				A100000E233F0001 /* StorageManager.swift in Sources */,
+				A1000020233F0001 /* Gamification.swift in Sources */,
+				A1000021233F0001 /* UIComponents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

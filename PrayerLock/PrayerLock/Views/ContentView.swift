@@ -14,41 +14,54 @@ struct ContentView: View {
                 MainTabView()
             }
         }
-        .animation(.easeInOut, value: appState.settings.hasCompletedOnboarding)
-        .animation(.easeInOut, value: appState.showPrayerScreen)
+        .animation(.easeInOut(duration: 0.4), value: appState.settings.hasCompletedOnboarding)
+        .animation(.easeInOut(duration: 0.4), value: appState.showPrayerScreen)
     }
 }
 
 struct MainTabView: View {
     @State private var selectedTab = 0
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
         TabView(selection: $selectedTab) {
             HomeView()
                 .tabItem {
-                    Label("Home", systemImage: "house.fill")
+                    VStack {
+                        Image(systemName: selectedTab == 0 ? "house.fill" : "house")
+                        Text("Home")
+                    }
                 }
                 .tag(0)
             
             DailyVerseView()
                 .tabItem {
-                    Label("Verse", systemImage: "book.fill")
+                    VStack {
+                        Image(systemName: selectedTab == 1 ? "book.fill" : "book")
+                        Text("Verse")
+                    }
                 }
                 .tag(1)
             
             StatsView()
                 .tabItem {
-                    Label("Stats", systemImage: "chart.bar.fill")
+                    VStack {
+                        Image(systemName: selectedTab == 2 ? "chart.bar.fill" : "chart.bar")
+                        Text("Journey")
+                    }
                 }
                 .tag(2)
             
             SettingsView()
                 .tabItem {
-                    Label("Settings", systemImage: "gearshape.fill")
+                    VStack {
+                        Image(systemName: selectedTab == 3 ? "gearshape.fill" : "gearshape")
+                        Text("Settings")
+                    }
                 }
                 .tag(3)
         }
-        .tint(Color("PrayerBlue"))
+        .tint(appState.settings.theme.primaryColor)
     }
 }
 

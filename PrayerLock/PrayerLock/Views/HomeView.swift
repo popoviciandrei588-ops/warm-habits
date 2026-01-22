@@ -3,40 +3,84 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var screenTimeManager: ScreenTimeManager
+    @State private var showAllChallenges = false
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 25) {
-                    // Greeting
-                    GreetingCard()
-                    
-                    // Streak Card
-                    StreakCard()
-                    
-                    // Mood Selector
-                    MoodSelectorCard()
-                    
-                    // Prayer Button
-                    PrayNowButton()
-                    
-                    // Quick Stats
-                    QuickStatsCard()
-                    
-                    // Blocking Status
-                    BlockingStatusCard()
+            ZStack {
+                AnimatedGradientBackground()
+                
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
+                        // Profile & Level Card
+                        ProfileLevelCard()
+                        
+                        // Streak & Stats Row
+                        StreakStatsRow()
+                        
+                        // Daily Challenges
+                        DailyChallengesSection()
+                        
+                        // Mood Selector
+                        MoodSelectorSection()
+                        
+                        // Pray Now Button
+                        PulsingButton(title: "Start Prayer", icon: "hands.clap.fill") {
+                            appState.startPrayer()
+                        }
+                        .padding(.horizontal)
+                        
+                        // Blocking Status
+                        BlockingStatusCard()
+                        
+                        // Recent Achievements
+                        RecentAchievementsSection()
+                        
+                        Spacer(minLength: 30)
+                    }
+                    .padding(.top)
                 }
-                .padding()
             }
-            .background(Color(.systemGroupedBackground))
             .navigationTitle("Prayer Lock")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    LevelBadge(level: appState.currentLevel, size: 36)
+                }
+            }
         }
     }
 }
 
-// MARK: - Components
-
-struct GreetingCard: View {
+// MARK: - Profile Level Card
+struct ProfileLevelCard: View {
+    @EnvironmentObject var appState: AppState
+    
+    var body: some View {
+        GlassCard {
+            HStack(spacing: 20) {
+                LevelBadge(level: appState.currentLevel, size: 70)
+                
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(greeting)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                    Text(appState.levelTitle)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                    
+                    XPProgressBar(
+                        progress: appState.levelProgress.progress,
+                        currentXP: appState.levelProgress.current,
+                        neededXP: appState.levelProgress.needed
+                    )
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+    
     var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
         switch hour {
@@ -46,288 +90,317 @@ struct GreetingCard: View {
         default: return "Good Night"
         }
     }
+}
+
+// MARK: - Streak Stats Row
+struct StreakStatsRow: View {
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(greeting)
-                    .font(.title2)
-                    .fontWeight(.semibold)
+        HStack(spacing: 15) {
+            // Streak Card
+            GlassCard {
+                HStack(spacing: 15) {
+                    StreakFlame(streak: appState.streak.currentStreak)
+                    
+                    VStack(alignment: .leading) {
+                        Text("\(appState.streak.currentStreak)")
+                            .font(.title)
+                            .fontWeight(.bold)
+                        Text("Day Streak")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            
+            // Total XP Card
+            GlassCard {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .foregroundColor(.yellow)
+                        Text("\(appState.settings.totalXP)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                    Text("Total XP")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            
+            // Prayers Today
+            GlassCard {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "hands.clap.fill")
+                            .foregroundStyle(appState.settings.theme.gradient)
+                        Text("\(appState.streak.todayPrayerCount)")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                    }
+                    Text("Today")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+// MARK: - Daily Challenges Section
+struct DailyChallengesSection: View {
+    @EnvironmentObject var appState: AppState
+    
+    var completedCount: Int {
+        appState.dailyChallenges.filter { $0.isCompleted }.count
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Daily Challenges")
+                    .font(.headline)
                 
-                Text("Take a moment to pray today")
+                Spacer()
+                
+                Text("\(completedCount)/\(appState.dailyChallenges.count)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
-            
-            Spacer()
-            
-            Image(systemName: "sun.max.fill")
-                .font(.title)
-                .foregroundColor(.orange)
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 5)
-    }
-}
-
-struct StreakCard: View {
-    @EnvironmentObject var appState: AppState
-    
-    var body: some View {
-        HStack(spacing: 20) {
-            VStack {
-                HStack(spacing: 5) {
-                    Image(systemName: "flame.fill")
-                        .foregroundColor(.orange)
-                    Text("\(appState.streak.currentStreak)")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-                Text("Day Streak")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            
-            Divider()
-                .frame(height: 40)
-            
-            VStack {
-                Text("\(appState.streak.totalPrayers)")
-                    .font(.title)
-                    .fontWeight(.bold)
-                Text("Total Prayers")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-            
-            Divider()
-                .frame(height: 40)
-            
-            VStack {
-                Text("\(appState.streak.longestStreak)")
-                    .font(.title)
-                    .fontWeight(.bold)
-                Text("Best Streak")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .frame(maxWidth: .infinity)
-        }
-        .padding()
-        .background(
-            LinearGradient(
-                colors: [Color.orange.opacity(0.1), Color.red.opacity(0.1)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
-        .cornerRadius(16)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.orange.opacity(0.2), lineWidth: 1)
-        )
-    }
-}
-
-struct MoodSelectorCard: View {
-    @EnvironmentObject var appState: AppState
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("How are you feeling?")
-                .font(.headline)
+            .padding(.horizontal)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
+                    ForEach(appState.dailyChallenges) { challenge in
+                        CompactChallengeCard(challenge: challenge)
+                    }
+                }
+                .padding(.horizontal)
+            }
+        }
+    }
+}
+
+struct CompactChallengeCard: View {
+    let challenge: DailyChallenge
+    @EnvironmentObject var appState: AppState
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: challenge.icon)
+                    .foregroundColor(challenge.isCompleted ? .green : appState.settings.theme.primaryColor)
+                
+                Spacer()
+                
+                if challenge.isCompleted {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                } else {
+                    Text("+\(challenge.xpReward)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(appState.settings.theme.primaryColor)
+                }
+            }
+            
+            Text(challenge.title)
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+            
+            // Progress bar
+            GeometryReader { geometry in
+                ZStack(alignment: .leading) {
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(Color.gray.opacity(0.2))
+                        .frame(height: 5)
+                    
+                    RoundedRectangle(cornerRadius: 3)
+                        .fill(challenge.isCompleted ? Color.green : appState.settings.theme.primaryColor)
+                        .frame(width: geometry.size.width * challenge.progressPercent, height: 5)
+                }
+            }
+            .frame(height: 5)
+            
+            Text("\(challenge.progress)/\(challenge.target)")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+        }
+        .padding()
+        .frame(width: 140)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(.systemBackground))
+                .shadow(color: .black.opacity(0.05), radius: 10, y: 5)
+        )
+    }
+}
+
+// MARK: - Mood Selector Section
+struct MoodSelectorSection: View {
+    @EnvironmentObject var appState: AppState
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("How are you feeling?")
+                .font(.headline)
+                .padding(.horizontal)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 15) {
                     ForEach(PrayerMood.allCases, id: \.self) { mood in
-                        MoodButton(
+                        MoodChip(
                             mood: mood,
                             isSelected: appState.settings.selectedMood == mood
                         ) {
-                            appState.selectMood(mood)
+                            withAnimation(.spring(response: 0.3)) {
+                                appState.selectMood(mood)
+                            }
                         }
                     }
                 }
+                .padding(.horizontal)
             }
         }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 5)
     }
 }
 
-struct MoodButton: View {
-    let mood: PrayerMood
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 8) {
-                Image(systemName: mood.icon)
-                    .font(.title2)
-                
-                Text(mood.rawValue)
-                    .font(.caption)
-                    .fontWeight(.medium)
-            }
-            .foregroundColor(isSelected ? .white : .primary)
-            .frame(width: 80, height: 70)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? Color("PrayerBlue") : Color(.systemGray6))
-            )
-        }
-        .buttonStyle(.plain)
-    }
-}
-
-struct PrayNowButton: View {
-    @EnvironmentObject var appState: AppState
-    
-    var body: some View {
-        Button(action: {
-            appState.startPrayer()
-        }) {
-            HStack(spacing: 12) {
-                Image(systemName: "hands.clap.fill")
-                    .font(.title2)
-                
-                VStack(alignment: .leading) {
-                    Text("Start Prayer")
-                        .font(.headline)
-                    Text("\(appState.settings.prayerDurationSeconds) seconds of peace")
-                        .font(.caption)
-                        .opacity(0.9)
-                }
-                
-                Spacer()
-                
-                Image(systemName: "arrow.right.circle.fill")
-                    .font(.title2)
-            }
-            .foregroundColor(.white)
-            .padding()
-            .background(
-                LinearGradient(
-                    colors: [Color("PrayerBlue"), Color("PrayerPurple")],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
-            .cornerRadius(16)
-        }
-        .buttonStyle(.plain)
-        .shadow(color: Color("PrayerBlue").opacity(0.3), radius: 10, y: 5)
-    }
-}
-
-struct QuickStatsCard: View {
-    @EnvironmentObject var appState: AppState
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            HStack {
-                Text("Today's Focus")
-                    .font(.headline)
-                Spacer()
-                
-                if appState.streak.hasPrayedToday() {
-                    Label("Prayed Today", systemImage: "checkmark.circle.fill")
-                        .font(.caption)
-                        .foregroundColor(.green)
-                }
-            }
-            
-            HStack(spacing: 15) {
-                StatBox(
-                    icon: "clock.fill",
-                    value: "\(appState.settings.prayerDurationSeconds)s",
-                    label: "Duration"
-                )
-                
-                StatBox(
-                    icon: "heart.fill",
-                    value: appState.settings.selectedMood.rawValue,
-                    label: "Mood"
-                )
-            }
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 5)
-    }
-}
-
-struct StatBox: View {
-    let icon: String
-    let value: String
-    let label: String
-    
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .foregroundColor(Color("PrayerBlue"))
-            
-            VStack(alignment: .leading) {
-                Text(value)
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
-                Text(label)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
-    }
-}
-
+// MARK: - Blocking Status Card
 struct BlockingStatusCard: View {
     @EnvironmentObject var screenTimeManager: ScreenTimeManager
+    @EnvironmentObject var appState: AppState
     
     var body: some View {
-        HStack {
-            Image(systemName: screenTimeManager.isBlocking ? "lock.fill" : "lock.open.fill")
-                .font(.title2)
-                .foregroundColor(screenTimeManager.isBlocking ? Color("PrayerBlue") : .gray)
-            
-            VStack(alignment: .leading) {
-                Text(screenTimeManager.isBlocking ? "App Blocking Active" : "App Blocking Disabled")
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                
-                Text("\(screenTimeManager.selectedAppCount) apps selected")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            
-            Spacer()
-            
-            Toggle("", isOn: Binding(
-                get: { screenTimeManager.isBlocking },
-                set: { newValue in
-                    if newValue {
-                        screenTimeManager.enableBlocking()
-                    } else {
-                        screenTimeManager.disableBlocking()
-                    }
+        GlassCard {
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(screenTimeManager.isBlocking ? appState.settings.theme.primaryColor.opacity(0.2) : Color.gray.opacity(0.1))
+                        .frame(width: 50, height: 50)
+                    
+                    Image(systemName: screenTimeManager.isBlocking ? "lock.fill" : "lock.open.fill")
+                        .font(.title2)
+                        .foregroundColor(screenTimeManager.isBlocking ? appState.settings.theme.primaryColor : .gray)
                 }
-            ))
-            .labelsHidden()
+                
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(screenTimeManager.isBlocking ? "App Blocking Active" : "App Blocking Disabled")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    
+                    Text("\(screenTimeManager.selectedAppCount) apps selected")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                
+                Spacer()
+                
+                Toggle("", isOn: Binding(
+                    get: { screenTimeManager.isBlocking },
+                    set: { newValue in
+                        if newValue {
+                            screenTimeManager.enableBlocking()
+                        } else {
+                            screenTimeManager.disableBlocking()
+                        }
+                    }
+                ))
+                .labelsHidden()
+                .tint(appState.settings.theme.primaryColor)
+            }
         }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: .black.opacity(0.05), radius: 10, y: 5)
+        .padding(.horizontal)
+    }
+}
+
+// MARK: - Recent Achievements Section
+struct RecentAchievementsSection: View {
+    @EnvironmentObject var appState: AppState
+    
+    var recentAchievements: [Achievement] {
+        appState.achievements
+            .filter { $0.isUnlocked }
+            .sorted { ($0.unlockedDate ?? .distantPast) > ($1.unlockedDate ?? .distantPast) }
+            .prefix(5)
+            .map { $0 }
+    }
+    
+    var nextAchievement: Achievement? {
+        appState.achievements.first { !$0.isUnlocked }
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Achievements")
+                    .font(.headline)
+                
+                Spacer()
+                
+                NavigationLink(destination: AchievementsView()) {
+                    Text("See All")
+                        .font(.subheadline)
+                        .foregroundColor(appState.settings.theme.primaryColor)
+                }
+            }
+            .padding(.horizontal)
+            
+            if recentAchievements.isEmpty {
+                // Show next achievement to unlock
+                if let next = nextAchievement {
+                    GlassCard {
+                        HStack(spacing: 15) {
+                            ZStack {
+                                Circle()
+                                    .fill(Color.gray.opacity(0.2))
+                                    .frame(width: 50, height: 50)
+                                
+                                Image(systemName: next.icon)
+                                    .foregroundColor(.gray)
+                            }
+                            
+                            VStack(alignment: .leading) {
+                                Text("Next Achievement")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                                
+                                Text(next.title)
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                
+                                Text(next.description)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            
+                            Spacer()
+                            
+                            Text("+\(next.xpReward) XP")
+                                .font(.caption)
+                                .foregroundColor(appState.settings.theme.primaryColor)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 15) {
+                        ForEach(recentAchievements) { achievement in
+                            AchievementBadge(achievement: achievement)
+                        }
+                        
+                        if let next = nextAchievement {
+                            AchievementBadge(achievement: next)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+            }
+        }
     }
 }
 
